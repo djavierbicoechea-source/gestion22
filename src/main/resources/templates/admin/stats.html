@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="layout/base :: layout(~{::section})">
+  <section>
+    <h1 class="mb-4">Statistiques</h1>
+
+    <div class="alert alert-primary">
+      <b>Moyenne globale pondérée (toutes notes):</b>
+      <span th:text="${#numbers.formatDecimal(globalAverage, 1, 2)}">0.00</span>
+    </div>
+
+    <h3 class="mt-4">Moyennes par matière</h3>
+    <table class="table table-striped">
+      <thead>
+      <tr><th>Matière</th><th>Nb notes</th><th>Moyenne</th></tr>
+      </thead>
+      <tbody>
+      <tr th:each="r : ${subjectAverages}">
+        <td th:text="${r.subjectName()}">Math</td>
+        <td th:text="${r.count()}">0</td>
+        <td th:text="${#numbers.formatDecimal(r.average(), 1, 2)}">0.00</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h3 class="mt-4">Classement étudiants (moyenne pondérée)</h3>
+    <table class="table table-striped">
+      <thead>
+      <tr><th>Étudiant</th><th>Classe</th><th>Moyenne</th></tr>
+      </thead>
+      <tbody>
+      <tr th:each="r : ${studentAverages}">
+        <td th:text="${r.studentName()}">Nom</td>
+        <td th:text="${r.classroom()}">L1</td>
+        <td th:text="${#numbers.formatDecimal(r.weightedAverage(), 1, 2)}">0.00</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </section>
+</div>
+</body>
+</html>

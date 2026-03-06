@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="layout/base :: layout(~{::section})">
+  <section>
+    <h1>404 - Ressource introuvable</h1>
+    <p class="text-muted" th:text="${message}">Not found</p>
+    <a class="btn btn-primary" th:href="@{/admin/dashboard}">Retour au dashboard</a>
+  </section>
+</div>
+</body>
+</html>
