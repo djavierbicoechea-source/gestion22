@@ -17,27 +17,36 @@ public class DataInitializer {
         return args -> {
             try {
 
-                if (!userRepository.existsByUsername("admin")) {
+                // Nouveau compte admin garanti
+                if (!userRepository.existsByUsername("admin2026")) {
                     userRepository.save(
-                        new User("admin",
-                                passwordEncoder.encode("school2026"),
-                                Role.ADMIN)
+                        new User(
+                            "admin2026",
+                            passwordEncoder.encode("123456"),
+                            Role.ADMIN
+                        )
                     );
                 }
 
+                // Professeur
                 if (!userRepository.existsByUsername("prof1")) {
                     userRepository.save(
-                        new User("prof1",
-                                passwordEncoder.encode("teach2026"),
-                                Role.PROFESSOR)
+                        new User(
+                            "prof1",
+                            passwordEncoder.encode("teach2026"),
+                            Role.PROFESSOR
+                        )
                     );
                 }
 
+                // Étudiant
                 if (!userRepository.existsByUsername("student1")) {
                     userRepository.save(
-                        new User("student1",
-                                passwordEncoder.encode("learn2026"),
-                                Role.STUDENT)
+                        new User(
+                            "student1",
+                            passwordEncoder.encode("learn2026"),
+                            Role.STUDENT
+                        )
                     );
                 }
 
@@ -48,4 +57,4 @@ public class DataInitializer {
             }
         };
     }
-                                   }
+}
