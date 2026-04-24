@@ -17,27 +17,27 @@ public class DataInitializer {
         return args -> {
 
             if (!userRepository.existsByUsername("admin")) {
-                User admin = new User();
-                admin.setUsername("admin");
-                admin.setPassword(passwordEncoder.encode("school2026"));
-                admin.setRole(Role.ADMIN);
-                userRepository.save(admin);
+                userRepository.save(
+                    new User("admin",
+                    passwordEncoder.encode("school2026"),
+                    Role.ADMIN)
+                );
             }
 
             if (!userRepository.existsByUsername("prof1")) {
-                User prof = new User();
-                prof.setUsername("prof1");
-                prof.setPassword(passwordEncoder.encode("teach2026"));
-                prof.setRole(Role.PROFESSOR);
-                userRepository.save(prof);
+                userRepository.save(
+                    new User("prof1",
+                    passwordEncoder.encode("teach2026"),
+                    Role.PROFESSOR)
+                );
             }
 
             if (!userRepository.existsByUsername("student1")) {
-                User student = new User();
-                student.setUsername("student1");
-                student.setPassword(passwordEncoder.encode("learn2026"));
-                student.setRole(Role.STUDENT);
-                userRepository.save(student);
+                userRepository.save(
+                    new User("student1",
+                    passwordEncoder.encode("learn2026"),
+                    Role.STUDENT)
+                );
             }
         };
     }
