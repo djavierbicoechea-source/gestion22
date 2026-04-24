@@ -12,49 +12,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DataInitializer {
 
     @Bean
-    CommandLineRunner init(UserRepository userRepository,
-                           PasswordEncoder passwordEncoder) {
+    CommandLineRunner init(UserRepository repo,
+                           PasswordEncoder encoder) {
         return args -> {
-            try {
 
-                // Nouveau compte admin garanti
-                if (!userRepository.existsByUsername("admin2026")) {
-                    userRepository.save(
-                        new User(
-                            "admin2026",
-                            passwordEncoder.encode("123456"),
-                            Role.ADMIN
-                        )
-                    );
-                }
+            repo.findByUsername("admin").ifPresent(repo::delete);
+            repo.findByUsername("student1").ifPresent(repo::delete);
+            repo.findByUsername("prof1").ifPresent(repo::delete);
 
-                // Professeur
-                if (!userRepository.existsByUsername("prof1")) {
-                    userRepository.save(
-                        new User(
-                            "prof1",
-                            passwordEncoder.encode("teach2026"),
-                            Role.PROFESSOR
-                        )
-                    );
-                }
+            repo.save(new User(
+                    "admin",
+                    encoder.encode("school2026"),
+                    Role.ADMIN));
 
-                // Étudiant
-                if (!userRepository.existsByUsername("student1")) {
-                    userRepository.save(
-                        new User(
-                            "student1",
-                            passwordEncoder.encode("learn2026"),
-                            Role.STUDENT
-                        )
-                    );
-                }
+            repo.save(new User(
+                    "student1",
+                    encoder.encode("learn2026"),
+                    Role.STUDENT));
 
-                System.out.println("DataInitializer OK");
+            repo.save(new User(
+                    "prof1",
+                    encoder.encode("teach2026"),
+                    Role.PROFESSOR));
 
-            } catch (Exception e) {
-                System.out.println("Initializer ignored: " + e.getMessage());
-            }
+            System.out.println("Users recreated OK");
         };
     }
 }
