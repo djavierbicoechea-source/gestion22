@@ -22,13 +22,17 @@ public class DataInitializer {
     return args -> {
 
       // Admin account
-      if (!userRepository.existsByUsername("direction")) {
+      if (!userRepository.existsByUsername("admin")) {
         User admin = new User("admin", passwordEncoder.encode("school2026"), Role.ADMIN);
         userRepository.save(admin);
       }
 
       // Demo professor & subject
-      Professor prof = professorRepository.findAll().stream().findFirst().orElse(null);
+      Professor prof = professorRepository.findAll().stream()
+          .filter(p -> "jean.dupont@school.com".equalsIgnoreCase(p.getEmail()))
+          .findFirst()
+          .orElseGet(() -> professorRepository.findAll().stream().findFirst().orElse(null));
+
       if (prof == null) {
         prof = professorRepository.save(new Professor("Jean", "Dupont", "jean.dupont@school.com"));
       }
@@ -51,17 +55,20 @@ public class DataInitializer {
         francais = subjectRepository.save(francais);
       }
 
-      
       // Demo professor user
-      if (!userRepository.existsByUsername("prof.math")) {
+      if (!userRepository.existsByUsername("prof1")) {
         User pu = new User("prof1", passwordEncoder.encode("teach2026"), Role.PROFESSOR);
         pu.setProfessor(prof);
         userRepository.save(pu);
       }
 
       // Demo student + student user
-      if (!userRepository.existsByUsername("etudiant.paul")) {
-        Student st = studentRepository.save(new Student("Marie", "Paul", "marie.paul@student.com", "L1"));
+      if (!userRepository.existsByUsername("student1")) {
+        Student st = studentRepository.findAll().stream()
+            .filter(s -> "marie.paul@student.com".equalsIgnoreCase(s.getEmail()))
+            .findFirst()
+            .orElseGet(() -> studentRepository.save(new Student("Marie", "Paul", "marie.paul@student.com", "L1")));
+
         User u = new User("student1", passwordEncoder.encode("learn2026"), Role.STUDENT);
         u.setStudent(st);
         userRepository.save(u);
