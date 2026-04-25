@@ -1,0 +1,10 @@
+
+body{background:#f5f7fb;}
+.card-stat{
+ background:white;
+ border-radius:10px;
+ padding:20px;
+ box-shadow:0 4px 10px rgba(0,0,0,0.05);
+ text-align:center;
+}
+.card-stat h2{font-weight:700;}

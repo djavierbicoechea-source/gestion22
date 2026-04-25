@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: gestion22
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: gestion22-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: gestion22-db
+          property: port
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: gestion22-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: gestion22-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: gestion22-db
+          property: password
+      - key: DDL_AUTO
+        value: update
+      - key: SHOW_SQL
+        value: false
+
+# Base PostgreSQL gratuite sur Render
+# Important : le nom gestion22-db doit rester identique à celui utilisé dans fromDatabase ci-dessus.
+databases:
+  - name: gestion22-db
+    plan: free
+    databaseName: gestion22_db
+    user: gestion22_user
